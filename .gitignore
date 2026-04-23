@@ -6,3 +6,4 @@ node_modules
 .env.*
 # zod prisma types
 __generated__
+/generated/prisma
