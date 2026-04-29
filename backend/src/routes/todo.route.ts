@@ -1,5 +1,6 @@
 import type { Application } from 'express';
 import {
+  assignCategoryToTodoController,
   createTodoController,
   deleteTodoController,
   getAllTodoController,
@@ -13,4 +14,6 @@ export const todoRoutes = (app: Application) => {
   app.delete('/api/deleteTodo/:id', deleteTodoController);
   app.get('/api/todo/:id', getTodoByIdController);
   app.put('/api/updatetodo/:id', updateTodoController);
+
+  app.post('/api/todo/assign-category', assignCategoryToTodoController);
 };

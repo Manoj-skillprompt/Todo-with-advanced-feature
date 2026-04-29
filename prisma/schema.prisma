@@ -37,4 +37,27 @@ model Todo {
 
   user_id Int
   user User @relation(fields: [user_id],references: [id])
+
+  todo_categories TodoCategory[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  todo_categories TodoCategory[]
+}
+
+// pivot table for joining two tables todo and categories
+
+model TodoCategory {
+  todo_id Int
+  todo Todo @relation(fields: [todo_id],references: [id], onDelete: Cascade)
+  category_id Int
+  categories Category @relation(fields: [category_id],references: [id], onDelete: Cascade)
+  
+  @@id([todo_id,category_id])
 }

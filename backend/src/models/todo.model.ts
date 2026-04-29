@@ -1,6 +1,7 @@
 import type { Prisma, todoStatus } from '../../../generated/prisma/client.js';
 import type { TodoUpdateInput, TodoWhereInput } from '../../../generated/prisma/models.js';
 import { prisma } from '../../../libs/prisma.js';
+import type { AssignCategoryToTodoSchema } from '../controllers/todo.controller.js';
 
 type TWhereInput = {
   status?: todoStatus;
@@ -17,11 +18,16 @@ export const createTodoModel = async (data: Prisma.TodoCreateInput) => {
   const createTodo = await prisma.todo.create({
     data: {
       title: data.title,
-      user: data.user,
+      user_id: 1,
       description: data.description ?? null,
       status: data.status ?? 'Pending',
     },
   });
+
+  if (!createTodo) {
+    throw new Error('Failed to create Todo');
+  }
+
   return createTodo;
 };
 
@@ -107,5 +113,20 @@ export const updateTodo = async (todoId: number, data: TodoUpdateInput) => {
 
     data,
   });
-  return todoExists;
+  return updatedTodo;
+};
+
+export const assignCategoryToTodo = async (data: AssignCategoryToTodoSchema) => {
+  const result = await prisma.todo_categories.create({
+    data: {
+      todo_id: data.todo_id,
+      category_id: data.category_id,
+    },
+    include: {
+      categories: true,
+      todo: true,
+    },
+  });
+
+  return result;
 };

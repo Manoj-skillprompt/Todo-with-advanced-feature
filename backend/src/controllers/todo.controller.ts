@@ -1,6 +1,13 @@
 import type { Request, Response } from 'express';
 import type { todoStatus } from '../../../generated/prisma/client.js';
-import { createTodoModel, deleteTodo, getAllTodoModel, getTodoById, updateTodo } from '../models/todo.model.js';
+import {
+  assignCategoryToTodo,
+  createTodoModel,
+  deleteTodo,
+  getAllTodoModel,
+  getTodoById,
+  updateTodo,
+} from '../models/todo.model.js';
 
 export const getAllTodoController = async (req: Request, res: Response) => {
   const query = req.query;
@@ -76,5 +83,21 @@ export const updateTodoController = async (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Updated successfully',
     data: response,
+  });
+};
+
+export interface AssignCategoryToTodoSchema {
+  todo_id: number;
+  category_id: number;
+}
+
+export const assignCategoryToTodoController = async (req: Request, res: Response) => {
+  const body = req.body as AssignCategoryToTodoSchema;
+
+  const assignedCategory = await assignCategoryToTodo(body);
+
+  res.status(201).json({
+    message: 'Category assigned to todo successfully',
+    data: assignedCategory,
   });
 };
