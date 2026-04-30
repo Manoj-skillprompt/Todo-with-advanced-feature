@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { todoRoutes } from './routes/todo.route.js';
 import { CategoryRouter } from './routes/category.router.js';
+import { userRouter } from './routes/user.router.js';
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.json());
 
 todoRoutes(app);
 CategoryRouter(app);
+userRouter(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

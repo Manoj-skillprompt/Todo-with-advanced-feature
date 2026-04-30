@@ -1,8 +1,8 @@
-import type { CategoriesCreateInput, CategoriesUpdateInput } from '../../../generated/prisma/models.js';
+import type { CategoryCreateInput, CategoryUpdateInput } from '../../../generated/prisma/models.js';
 import { prisma } from '../../../libs/prisma.js';
 
-export const createCategory = async (data: CategoriesCreateInput) => {
-  const category = await prisma.categories.create({
+export const createCategory = async (data: CategoryCreateInput) => {
+  const category = await prisma.category.create({
     data: {
       name: data.name,
       description: data.description ? data.description : null,
@@ -13,13 +13,13 @@ export const createCategory = async (data: CategoriesCreateInput) => {
 };
 
 export const getAllCategories = async () => {
-  const allCategories = await prisma.categories.findMany();
+  const allCategories = await prisma.category.findMany();
 
   return allCategories;
 };
 
 export const getCategoryById = async (categoryId: number) => {
-  const result = await prisma.categories.findFirst({
+  const result = await prisma.category.findFirst({
     where: {
       id: categoryId,
     },
@@ -32,8 +32,8 @@ export const getCategoryById = async (categoryId: number) => {
   return result;
 };
 
-export const updateCategory = async (categoryId: number, data: CategoriesUpdateInput) => {
-  const categoryExists = await prisma.categories.findFirst({
+export const updateCategory = async (categoryId: number, data: CategoryUpdateInput) => {
+  const categoryExists = await prisma.category.findFirst({
     where: {
       id: categoryId,
     },
@@ -43,7 +43,7 @@ export const updateCategory = async (categoryId: number, data: CategoriesUpdateI
     throw new Error(`Category with id ${categoryId} does not exists`);
   }
 
-  const updatedCategory = await prisma.categories.update({
+  const updatedCategory = await prisma.category.update({
     where: {
       id: categoryId,
     },
@@ -54,7 +54,7 @@ export const updateCategory = async (categoryId: number, data: CategoriesUpdateI
 };
 
 export const deleteCategory = async (categoryId: number) => {
-  const categoryExists = await prisma.categories.findFirst({
+  const categoryExists = await prisma.category.findFirst({
     where: {
       id: categoryId,
     },
@@ -64,7 +64,7 @@ export const deleteCategory = async (categoryId: number) => {
     throw new Error(`Category with id ${categoryId} does not exists`);
   }
 
-  const deletedCategory = await prisma.categories.delete({
+  const deletedCategory = await prisma.category.delete({
     where: {
       id: categoryId,
     },

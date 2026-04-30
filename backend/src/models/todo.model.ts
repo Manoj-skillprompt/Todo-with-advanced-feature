@@ -117,7 +117,7 @@ export const updateTodo = async (todoId: number, data: TodoUpdateInput) => {
 };
 
 export const assignCategoryToTodo = async (data: AssignCategoryToTodoSchema) => {
-  const result = await prisma.todo_categories.create({
+  const result = await prisma.todoCategory.create({
     data: {
       todo_id: data.todo_id,
       category_id: data.category_id,
